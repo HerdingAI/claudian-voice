@@ -34,7 +34,7 @@ export const DEFAULT_SETTINGS: ClaudianVoiceSettings = {
   autoSpeakReplies: true,
   skipCodeBlocksInSpeech: true,
   vadThreshold: 0.015,
-  vadSilenceMs: 1200,
+  vadSilenceMs: 750,
   minSpeechMs: 350,
 };
 
