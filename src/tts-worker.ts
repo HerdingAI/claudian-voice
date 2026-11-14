@@ -5,6 +5,24 @@ import * as path from "path";
 import { buildCleanEnv, getKokoroPaths } from "./env";
 import { ClaudianVoiceSettings } from "./types";
 
+function stripMarkdownForSpeech(text: string): string {
+  return text
+    .replace(/```[\s\S]*?```/g, " (code block omitted) ")
+    .replace(/`([^`]+)`/g, "$1")
+    .replace(/!\[([^\]]*)\]\([^)]+\)/g, "$1")
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+    .replace(/^#{1,6}\s+/gm, "")
+    .replace(/^>\s?/gm, "")
+    .replace(/^\s*[-*+]\s+/gm, "")
+    .replace(/(\*\*\*|___)(.+?)\1/g, "$2")
+    .replace(/(\*\*|__)(.+?)\1/g, "$2")
+    .replace(/(\*|_)(.+?)\1/g, "$2")
+    .replace(/~~(.+?)~~/g, "$1")
+    .replace(/[*_`~]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 export class TtsSpeaker {
   private worker: ChildProcessWithoutNullStreams | null = null;
   private readyPromise: Promise<void> | null = null;
@@ -251,7 +269,7 @@ export class TtsSpeaker {
   }
 
   enqueue(text: string): void {
-    const cleaned = text.trim();
+    const cleaned = stripMarkdownForSpeech(text);
     if (!cleaned) return;
     this.playQueue.push(cleaned);
     if (!this.isPlaying) {
