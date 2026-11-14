@@ -1,0 +1,7 @@
+node_modules/
+main.js
+dist/
+*.zip
+*.log
+__pycache__/
+.DS_Store
