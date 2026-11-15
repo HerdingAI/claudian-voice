@@ -1,6 +1,6 @@
 {
-  "id": "claudian-voice",
-  "name": "Claudian Voice",
+  "id": "claudian-local-voice",
+  "name": "Claudian Local Voice",
   "version": "0.1.0",
   "minAppVersion": "1.5.0",
   "description": "Back-and-forth voice conversation (push-to-talk and hands-free) for Claudian using local Whisper STT and Kokoro TTS.",
