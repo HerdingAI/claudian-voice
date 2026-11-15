@@ -5,5 +5,6 @@
   "minAppVersion": "1.5.0",
   "description": "Back-and-forth voice conversation (push-to-talk and hands-free) for Claudian using local Whisper STT and Kokoro TTS.",
   "author": "Carlos Rivero",
+  "authorUrl": "https://github.com/HerdingAI/claudian-voice",
   "isDesktopOnly": true
 }
