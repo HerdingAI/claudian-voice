@@ -11,7 +11,7 @@ Back-and-forth voice interaction for the **Claudian** Obsidian plugin, powered b
 ## Requirements
 
 - **Claudian** (`realclaudian`) plugin installed in your Obsidian vault.
-- **Local Whisper STT**: Python environment with `faster-whisper` (defaults to `~/.venvs/audio/bin/python3`).
+- **Local Whisper STT**: Python environment with `faster-whisper` (defaults to `~/.venvs/audio/bin/python3`; preloads CUDA libraries in dependency order with automatic CPU `int8` fallback).
 - **Local Kokoro TTS** (optional, falls back to Web Speech): Installed via `read-aloud` at `~/.cache/obsidian-read-aloud`.
 
 ## Build & Package
