@@ -47,9 +47,10 @@ def preload_cuda_libraries() -> list[str]:
         pass
 
     patterns = [
+        "nvidia/cuda_runtime/lib/libcudart*.so*",
+        "nvidia/cublas/lib/libcublasLt*.so*",
         "nvidia/cublas/lib/libcublas*.so*",
         "nvidia/cudnn/lib/libcudnn*.so*",
-        "nvidia/cuda_runtime/lib/libcudart*.so*",
     ]
 
     for root in candidate_roots:
@@ -113,14 +114,31 @@ def main() -> None:
                 language = None
 
             t0 = time.perf_counter()
-            segments, info = model.transcribe(
-                wav_path,
-                language=language,
-                beam_size=1,
-                vad_filter=True,
-                vad_parameters={"min_silence_duration_ms": 300},
-            )
-            text = " ".join(seg.text.strip() for seg in segments if seg.text.strip()).strip()
+            try:
+                segments, info = model.transcribe(
+                    wav_path,
+                    language=language,
+                    beam_size=1,
+                    vad_filter=True,
+                    vad_parameters={"min_silence_duration_ms": 300},
+                )
+                text = " ".join(seg.text.strip() for seg in segments if seg.text.strip()).strip()
+            except Exception as exc:
+                msg = str(exc).lower()
+                if active_device == "cuda" and (
+                    "cublas" in msg or "cudnn" in msg or "cuda" in msg or "lib" in msg
+                ):
+                    model, active_device = load_model(model_name, "cpu")
+                    segments, info = model.transcribe(
+                        wav_path,
+                        language=language,
+                        beam_size=1,
+                        vad_filter=True,
+                        vad_parameters={"min_silence_duration_ms": 300},
+                    )
+                    text = " ".join(seg.text.strip() for seg in segments if seg.text.strip()).strip()
+                else:
+                    raise
             stt_ms = int((time.perf_counter() - t0) * 1000)
 
             print(
