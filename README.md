@@ -57,6 +57,12 @@ Copy `manifest.json`, `main.js`, `styles.css`, and `stt_worker.py` (or extract `
 - **No `faster-whisper` found**: Verify `~/.venvs/audio/bin/python3 -c "import faster_whisper"` succeeds, or set your custom Python executable path in plugin settings.
 - **No TTS audio**: Confirm Kokoro assets exist in `~/.cache/obsidian-read-aloud` or ensure your OS text-to-speech engine is enabled for Web Speech fallback.
 
+## Claudian Suite
+
+- **[Claudian Mobile](https://github.com/HerdingAI/claudian-mobile)** — Mobile-compatible (`isDesktopOnly: false`) Obsidian plugin for iOS, Android, and Desktop via `claudian-bridge`.
+- **[Claudian Bridge](https://github.com/HerdingAI/claudian-bridge)** — Workstation HTTP/SSE server powering Claudian Mobile and Claudian Call.
+- **[Claudian Call](https://github.com/HerdingAI/claudian-call)** — Native Android app for screen-off, phone-call-style voice conversations.
+
 ## License
 
 MIT — see [LICENSE](LICENSE).
